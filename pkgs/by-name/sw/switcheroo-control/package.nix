@@ -8,6 +8,7 @@
   pkg-config,
   glib,
   python3Packages,
+  versionCheckHook,
 }:
 
 python3Packages.buildPythonApplication rec {
@@ -44,6 +45,12 @@ python3Packages.buildPythonApplication rec {
     "-Dsystemdsystemunitdir=${placeholder "out"}/etc/systemd/system"
     "-Dhwdbdir=${placeholder "out"}/etc/udev/hwdb.d"
   ];
+
+  nativeCheckInputs = [
+    versionCheckHook
+  ];
+  versionCheckProgram = "${placeholder "out"}/bin/switcherooctl";
+  versionCheckProgramArg = "version";
 
   meta = {
     description = "D-Bus service to check the availability of dual-GPU";
